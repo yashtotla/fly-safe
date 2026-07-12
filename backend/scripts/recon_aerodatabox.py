@@ -17,8 +17,8 @@ import httpx
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 from app.config import settings  # noqa: E402
 
-FLIGHT = "QR557"          # BOM -> DOH (confirmed)
-DATE = "2026-07-12"       # yesterday: a completed flight -> full "operated" shape
+FLIGHT = "QR557"  # BOM -> DOH (confirmed)
+DATE = "2026-07-12"  # yesterday: a completed flight -> full "operated" shape
 BASE = "https://aerodatabox.p.rapidapi.com"
 
 FIXTURES = pathlib.Path(__file__).resolve().parent.parent / "tests" / "fixtures" / "aerodatabox"
@@ -40,7 +40,9 @@ def main() -> None:
     resp = httpx.get(url, headers=headers, params=params, timeout=30.0)
     print("HTTP", resp.status_code)
 
-    quota = {k: v for k, v in resp.headers.items() if "ratelimit" in k.lower() or "quota" in k.lower()}
+    quota = {
+        k: v for k, v in resp.headers.items() if "ratelimit" in k.lower() or "quota" in k.lower()
+    }
     print("quota headers:", quota)
 
     if resp.status_code != 200:

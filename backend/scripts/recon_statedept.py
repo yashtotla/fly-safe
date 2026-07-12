@@ -31,7 +31,12 @@ def main() -> None:
     print("saved raw ->", FIX / "advisories_raw.json")
 
     items = data if isinstance(data, list) else data.get("data") or data.get("items") or []
-    print("top-level type:", type(data).__name__, "| item count:", len(items) if isinstance(items, list) else "n/a")
+    print(
+        "top-level type:",
+        type(data).__name__,
+        "| item count:",
+        len(items) if isinstance(items, list) else "n/a",
+    )
     if isinstance(items, list) and items:
         print("item keys:", sorted(items[0].keys()))
         # Surface the three countries we care about (India / Qatar / United States).

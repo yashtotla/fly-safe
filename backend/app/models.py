@@ -20,7 +20,7 @@ class FlightStatusRow(Base, ProvenanceMixin):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     flight_number: Mapped[str] = mapped_column(index=True)  # "QR557"
-    flight_date: Mapped[str] = mapped_column(index=True)    # local departure date "2026-07-12"
+    flight_date: Mapped[str] = mapped_column(index=True)  # local departure date "2026-07-12"
     payload: Mapped[dict] = mapped_column(JSON)
 
     __table_args__ = (UniqueConstraint("flight_number", "flight_date", name="uq_flight_date"),)

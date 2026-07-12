@@ -11,6 +11,7 @@ dependencies = [
     "aiosqlite",
     "pydantic>=2",
     "pydantic-settings",
+    "beautifulsoup4",
 ]
 
 [dependency-groups]

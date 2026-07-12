@@ -16,8 +16,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 
 class FreshnessState(str, enum.Enum):
-    FRESH = "fresh"            # confirmed within max_age
-    STALE = "stale"            # have a last-known value, but older than max_age
+    FRESH = "fresh"  # confirmed within max_age
+    STALE = "stale"  # have a last-known value, but older than max_age
     UNAVAILABLE = "unavailable"  # nothing trustworthy to show
 
 
@@ -42,8 +42,8 @@ class ProvenanceMixin:
     exist on every fact (the definitional invariant of this product).
     """
 
-    source: Mapped[str] = mapped_column()            # e.g. "aerodatabox"
-    source_url: Mapped[str] = mapped_column()         # official link for this fact
-    source_tier: Mapped[str] = mapped_column()        # "T0".."T3"
+    source: Mapped[str] = mapped_column()  # e.g. "aerodatabox"
+    source_url: Mapped[str] = mapped_column()  # official link for this fact
+    source_tier: Mapped[str] = mapped_column()  # "T0".."T3"
     fetched_at: Mapped[dt.datetime] = mapped_column()  # last successful confirmation (UTC)
-    max_age_seconds: Mapped[int] = mapped_column()     # freshness threshold for this source
+    max_age_seconds: Mapped[int] = mapped_column()  # freshness threshold for this source
