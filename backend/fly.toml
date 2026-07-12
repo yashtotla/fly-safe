@@ -1,0 +1,28 @@
+# Fly.io config for the fly-safe backend.
+# `app` must be unique — change it (or run `fly launch` to generate one).
+app = "fly-safe-api"
+primary_region = "bom"  # Mumbai — closest to the initial cohort. Pick your own.
+
+[build]
+
+[env]
+  POLL_ENABLED = "true"
+  DATABASE_URL = "sqlite+aiosqlite:////data/flysafe.db"
+  # CORS_ORIGINS is set after the frontend is deployed, e.g.
+  #   fly secrets set CORS_ORIGINS='["https://fly-safe.vercel.app"]'
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  # Always-on: the in-process scheduler must keep running.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[mounts]
+  source = "flysafe_data"       # persistent volume for the SQLite cache + change-log
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

@@ -265,3 +265,16 @@ _Reached one-by-one; not yet enacted. Awaiting final shared-understanding confir
 - No API. Parse the listing: identifier, title, status (Active/Withdrawn), validity range, detail URL. Needs an HTML parser (bs4); fail-safe = link to the listing page.
 - **Current:** the blanket **"Middle East and Persian Gulf" bulletin (2026-03-R14) is WITHDRAWN** (was 28/02–08/07/2026). Active country CZIBs: **Iran CZIB-2026-04, Iraq CZIB-2026-05, Lebanon CZIB-2026-06** (expire 31/08/2026).
 - **Panel framing:** show active regional CZIBs as *overflight context* (Iran/Iraq for this corridor) with validity + link — NOT a claim the flight overflies them. Complements advisories (in-country) vs airspace (overflown).
+
+## 15. Build status (2026-07-13)
+
+**MVP complete and verified end-to-end for BOM–DOH–ATL / QR.**
+- **Backend** (async FastAPI + SQLite via SQLAlchemy): decoupled per-source models + provenance mixin + change-log; parsers with validate-on-ingest + reject-unknown-enum (10 tests green); in-process budget-aware scheduler (gated by `POLL_ENABLED`); assembly layer; endpoints `/health`, `/routes`, `/route/{id}`; failures → deduped GitHub issue + `/health`.
+- **Frontend** (Vite + React + TS + Tailwind): catalog-gated route picker; 4 panels (flights / advisories / airspace / history), each rendering value + provenance + freshness; shareable `?route&date` URL; disclaimer. Builds clean.
+- **Live-verified:** real polls populated advisories (IN L2, QA L3), CZIBs (Iran + Iraq active), both flights (QR557 + QR755). **30 of 600 AeroDataBox units used.**
+- **Deploy-ready:** `backend/Dockerfile` + `fly.toml`, `.github/workflows/ci.yml`, `DEPLOY.md`. Actual deploy needs Fly/Vercel accounts — see `DEPLOY.md`.
+
+**Review before deploy (human-in-the-loop):**
+- Historical cards in `backend/content/history/*.json` are LLM-drafted from cited sources — verify wording; add more events if wanted.
+- Eyeball the UI at `localhost:5173`.
+- Optionally tune per-source `max_age` to volatility.
