@@ -27,5 +27,8 @@ dist/
 .vscode/
 .idea/
 
+# Large raw recon dumps (commit trimmed *_sample.* instead)
+**/*_raw.*
+
 # Claude local settings (personal, not shared)
 .claude/settings.local.json

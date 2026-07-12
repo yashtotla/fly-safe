@@ -254,4 +254,14 @@ _Reached one-by-one; not yet enacted. Awaiting final shared-understanding confir
 - Per flight: `departure`/`arrival` = `{airport{icao,iata,name,shortName,municipalityName,location{lat,lon},countryCode,timeZone}, scheduledTime{utc,local}, revisedTime{utc,local}?, runwayTime{utc,local}? (arrival actual), terminal?, gate?, baggageBelt?, quality[]}`; plus `number` ("QR 557", spaced), `status` (enum, e.g. "Arrived"), `codeshareStatus` ("IsOperator"), `isCargo`, `aircraft{model?}`, `airline{name,iata,icao}`, `greatCircleDistance{…}`, `lastUpdatedUtc`.
 - **Modeling / edge cases:** times are **non-ISO** strings (`"2026-07-11 22:40Z"`, space not `T`) → parse to tz-aware datetimes carefully (this is the timezone test). `revisedTime`/`runwayTime`/`terminal`/`gate`/`baggageBelt`/`aircraft.model` are OPTIONAL. `status` is an enum → map known values, guard-fail on unknown. Delay = `revisedTime` vs `scheduledTime`. Cancelled/Diverted are the concerning statuses.
 - **⚠ BUDGET:** costs **6 API units/call** (quota header dropped 600→594 on one call) → **~100 flight-status calls/month.** Drives the ~1×/day cadence. TODO: check whether a multi-day range costs the same 6 units (would let one call cover N days of route health).
-- **TODO:** find the DOH→ATL QR flight number for the catalog (free; via schedule sites, not the API). BOM→DOH confirmed = **QR557**.
+- **Route catalog (BOM–DOH–ATL / QR):** BOM→DOH = **QR557**, DOH→ATL = **QR755** (both daily, A350-1000; QR556/QR756 are the returns).
+
+**US State Dept advisories** (`GET https://cadataapi.state.gov/api/TravelAdvisories` — free JSON; fixture `backend/tests/fixtures/statedept/advisories_sample.json`)
+- List of ~213 items; keys `Title, Link, Category, Summary, Published, Updated, id`.
+- **`Category` is a list of ISO codes** (`["QA"]`) → match country by code. **Level lives only in `Title`** ("Qatar - Level 3: Reconsider Travel") → parse level+label by regex; guard-fail if "Level N" absent. `Summary` is HTML; `Link`/`id` = official advisory URL (provenance); times ISO w/ offset.
+- **Current (route-relevant):** Qatar **Level 3** (armed-conflict risk; ordered departure Mar 2 2026), India **Level 2**, **US = no advisory** (State Dept doesn't advise on the US) → render US leg as "no advisory issued". Sample edge cases: Iran L4, "Mexico Travel Advisory -" (multi-word title), Liberia.
+
+**EASA CZIB** (listing `https://www.easa.europa.eu/en/domains/air-operations/czibs` — free, **server-rendered HTML**, scrapeable; raw fixture gitignored)
+- No API. Parse the listing: identifier, title, status (Active/Withdrawn), validity range, detail URL. Needs an HTML parser (bs4); fail-safe = link to the listing page.
+- **Current:** the blanket **"Middle East and Persian Gulf" bulletin (2026-03-R14) is WITHDRAWN** (was 28/02–08/07/2026). Active country CZIBs: **Iran CZIB-2026-04, Iraq CZIB-2026-05, Lebanon CZIB-2026-06** (expire 31/08/2026).
+- **Panel framing:** show active regional CZIBs as *overflight context* (Iran/Iraq for this corridor) with validity + link — NOT a claim the flight overflies them. Complements advisories (in-country) vs airspace (overflown).
