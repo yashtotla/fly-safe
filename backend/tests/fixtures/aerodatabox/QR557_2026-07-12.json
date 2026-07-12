@@ -1,0 +1,85 @@
+[
+  {
+    "greatCircleDistance": {
+      "meter": 2293743.04,
+      "km": 2293.74,
+      "mile": 1425.27,
+      "nm": 1238.52,
+      "feet": 7525403.68
+    },
+    "departure": {
+      "airport": {
+        "icao": "VABB",
+        "iata": "BOM",
+        "name": "Mumbai Chhatrapati Shivaji",
+        "shortName": "Chhatrapati Shivaji",
+        "municipalityName": "Mumbai",
+        "location": {
+          "lat": 19.0887,
+          "lon": 72.8679
+        },
+        "countryCode": "IN",
+        "timeZone": "Asia/Kolkata"
+      },
+      "scheduledTime": {
+        "utc": "2026-07-11 22:40Z",
+        "local": "2026-07-12 04:10+05:30"
+      },
+      "revisedTime": {
+        "utc": "2026-07-11 23:00Z",
+        "local": "2026-07-12 04:30+05:30"
+      },
+      "terminal": "2",
+      "gate": "76",
+      "quality": [
+        "Basic",
+        "Live"
+      ]
+    },
+    "arrival": {
+      "airport": {
+        "icao": "OTHH",
+        "iata": "DOH",
+        "name": "Doha Hamad",
+        "shortName": "Hamad",
+        "municipalityName": "Doha",
+        "location": {
+          "lat": 25.273056,
+          "lon": 51.608055
+        },
+        "countryCode": "QA",
+        "timeZone": "Asia/Qatar"
+      },
+      "scheduledTime": {
+        "utc": "2026-07-12 02:00Z",
+        "local": "2026-07-12 05:00+03:00"
+      },
+      "revisedTime": {
+        "utc": "2026-07-12 01:58Z",
+        "local": "2026-07-12 04:58+03:00"
+      },
+      "runwayTime": {
+        "utc": "2026-07-12 01:45Z",
+        "local": "2026-07-12 04:45+03:00"
+      },
+      "baggageBelt": "3",
+      "quality": [
+        "Basic",
+        "Live"
+      ]
+    },
+    "lastUpdatedUtc": "2026-07-12 02:05Z",
+    "number": "QR 557",
+    "status": "Arrived",
+    "codeshareStatus": "IsOperator",
+    "isCargo": false,
+    "aircraft": {
+      "model": "Airbus A350-1000"
+    },
+    "airline": {
+      "name": "Qatar Airways",
+      "iata": "QR",
+      "icao": "QTR"
+    }
+  }
+]

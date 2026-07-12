@@ -240,8 +240,18 @@ _Reached one-by-one; not yet enacted. Awaiting final shared-understanding confir
 
 - **Advisory scope:** only countries you're physically in — IN / QA / US — not overflown countries.
 - **Route-health signal:** last ~7-day operated/cancelled summary + your-date scheduled flights (confirm feasibility vs the API's date-range in Phase 1).
-- **`max_age` (rough; tune in Phase 1):** flight status ~3h · advisories ~24h · CZIB pointer ~24h.
+- **`max_age` + poll cadence (rough; tune per source):** flight status **polled ~1×/day** (budget-bound — see §14), max_age ~24–30h · advisories ~24h · CZIB pointer ~24h.
 - **Historical events (curate + human-review each):** Apr 2024 (Iran→Israel #1) · Oct 2024 (Iran→Israel #2) · 13–24 Jun 2025 (12-day war) · **23 Jun 2025 (Doha airspace closure — hero card)** · Feb 2026.
 - **Conflict display:** two sources of the same kind → show both, side by side, with attribution + timestamps.
 - **API surface:** public, read-only, no auth for v1.
 - **Disclaimer (draft):** "Informational only. This dashboard aggregates public sources with timestamps and links; it is not advice and not a safety guarantee. Verify with official sources before making travel decisions."
+
+## 14. Reconnaissance findings
+
+**AeroDataBox — flight status by number** (fixture: `backend/tests/fixtures/aerodatabox/QR557_2026-07-12.json`)
+- Endpoint: `GET /flights/number/{number}/{dateFrom}/{dateTo}` on host `aerodatabox.p.rapidapi.com`; headers `x-rapidapi-key` + `x-rapidapi-host`. Key is a RapidAPI key.
+- **Returns a LIST** of flight objects (one per operating day in the range).
+- Per flight: `departure`/`arrival` = `{airport{icao,iata,name,shortName,municipalityName,location{lat,lon},countryCode,timeZone}, scheduledTime{utc,local}, revisedTime{utc,local}?, runwayTime{utc,local}? (arrival actual), terminal?, gate?, baggageBelt?, quality[]}`; plus `number` ("QR 557", spaced), `status` (enum, e.g. "Arrived"), `codeshareStatus` ("IsOperator"), `isCargo`, `aircraft{model?}`, `airline{name,iata,icao}`, `greatCircleDistance{…}`, `lastUpdatedUtc`.
+- **Modeling / edge cases:** times are **non-ISO** strings (`"2026-07-11 22:40Z"`, space not `T`) → parse to tz-aware datetimes carefully (this is the timezone test). `revisedTime`/`runwayTime`/`terminal`/`gate`/`baggageBelt`/`aircraft.model` are OPTIONAL. `status` is an enum → map known values, guard-fail on unknown. Delay = `revisedTime` vs `scheduledTime`. Cancelled/Diverted are the concerning statuses.
+- **⚠ BUDGET:** costs **6 API units/call** (quota header dropped 600→594 on one call) → **~100 flight-status calls/month.** Drives the ~1×/day cadence. TODO: check whether a multi-day range costs the same 6 units (would let one call cover N days of route health).
+- **TODO:** find the DOH→ATL QR flight number for the catalog (free; via schedule sites, not the API). BOM→DOH confirmed = **QR557**.
