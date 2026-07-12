@@ -1,0 +1,12 @@
+{
+  "airline": "QR",
+  "date": "23 June 2025",
+  "title": "Qatari airspace closed after strike on Al Udeid Air Base",
+  "summary": "Iran struck the Al Udeid Air Base near Doha and Qatar abruptly closed its airspace with roughly 100 Qatar Airways aircraft already inbound. Bahrain, the UAE and Kuwait closed their airspace shortly after.",
+  "airline_response": "Qatar Airways diverted 90+ flights carrying more than 20,000 passengers, arranged about 3,200 hotel rooms for 4,600 customers, cleared all diverted passengers within 24 hours, and resumed its scheduled network within roughly 18 hours — with no safety incidents.",
+  "sources": [
+    {"label": "Qatar Airways — CEO open letter", "url": "https://www.qatarairways.com/press-releases/en-WW/251548-to-our-passengers-an-open-letter-from-qatar-airways-group-chief-executive-officer/"},
+    {"label": "Gulf News", "url": "https://gulfnews.com/business/aviation/how-qatar-airways-managed-the-sudden-airspace-closure-restored-flights-in-record-time-1.500176965"},
+    {"label": "Simple Flying — where the fleet diverted", "url": "https://simpleflying.com/qatar-airways-fleet-disruption-iran-attack-closed-airspace/"}
+  ]
+}

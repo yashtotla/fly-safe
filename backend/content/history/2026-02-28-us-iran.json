@@ -1,0 +1,11 @@
+{
+  "airline": "QR",
+  "date": "28 February 2026",
+  "title": "Renewed US–Iran hostilities disrupt Gulf airspace",
+  "summary": "Following the onset of hostilities between the United States and Iran on 28 February 2026, the region saw drone and missile threats and significant disruptions to commercial flights; the U.S. ordered the departure of non-emergency government staff from Qatar on 2 March.",
+  "airline_response": "Qatar Airways routed all Doha traffic through a limited set of QCAA-authorised corridors and progressively restored its schedule as airspace reopened; by mid-2026 Doha operations were reported to be close to normal.",
+  "sources": [
+    {"label": "U.S. State Dept — Qatar Travel Advisory", "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/qatar-travel-advisory.html"},
+    {"label": "OpsGroup — Middle East airspace picture", "url": "https://ops.group/blog/middle-east-airspace-current-operational-picture/"}
+  ]
+}
