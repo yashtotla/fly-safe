@@ -7,7 +7,7 @@ dependencies = [
     "fastapi",
     "uvicorn[standard]",
     "httpx",
-    "sqlalchemy>=2.0",
+    "sqlalchemy[asyncio]>=2.0",
     "aiosqlite",
     "pydantic>=2",
     "pydantic-settings",
