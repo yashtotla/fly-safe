@@ -1,0 +1,32 @@
+[project]
+name = "flysafe"
+version = "0.1.0"
+description = "fly-safe backend — polls public sources, caches, serves a JSON API"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx",
+    "sqlalchemy>=2.0",
+    "aiosqlite",
+    "pydantic>=2",
+    "pydantic-settings",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
