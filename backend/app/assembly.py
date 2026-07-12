@@ -107,12 +107,15 @@ class RouteBundle(BaseModel):
 
 
 def _prov(row, now: dt.datetime) -> Provenance:
+    # SQLite stores naive datetimes; stamp them UTC so the client parses them as UTC
+    # (not local) — otherwise "confirmed X ago" is off by the browser's tz offset.
+    fetched = row.fetched_at if row.fetched_at.tzinfo else row.fetched_at.replace(tzinfo=dt.UTC)
     return Provenance(
         source=row.source,
         source_url=row.source_url,
         tier=row.source_tier,
-        fetched_at=row.fetched_at,
-        freshness=derive_freshness(row.fetched_at, row.max_age_seconds, now),
+        fetched_at=fetched,
+        freshness=derive_freshness(fetched, row.max_age_seconds, now),
     )
 
 
