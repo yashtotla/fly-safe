@@ -77,11 +77,15 @@ async def poll_czibs(session: AsyncSession, client: httpx.AsyncClient) -> None:
 async def poll_flights(session: AsyncSession, client: httpx.AsyncClient) -> None:
     yday = (store.utcnow() - dt.timedelta(days=1)).strftime("%Y-%m-%d")
     seen: set[str] = set()
+    first = True
     for route in ROUTES.values():
         for leg in route.legs:
             if leg.flight_number in seen:
                 continue
             seen.add(leg.flight_number)
+            if not first:
+                await asyncio.sleep(2)  # space out calls: free-tier rate limit
+            first = False
             raw = await fetch.fetch_flight(client, leg.flight_number, yday, yday)
             for f in aerodatabox.parse(raw):
                 await store.upsert_flight(
