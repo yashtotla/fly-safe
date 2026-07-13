@@ -4,16 +4,14 @@
 #
 
 app = 'fly-safe-api'
-primary_region = 'bom'
+primary_region = 'sin'
 
 [build]
 [env]
-  DATABASE_URL = 'sqlite+aiosqlite:////data/flysafe.db'
+  # Ephemeral SQLite on the machine's own disk (no persistent volume). The snapshot
+  # is a disposable cache that repopulates from sources on each boot/poll.
+  DATABASE_URL = 'sqlite+aiosqlite:////tmp/flysafe.db'
   POLL_ENABLED = 'true'
-
-[[mounts]]
-  source = 'flysafe_data'
-  destination = '/data'
 
 [http_service]
   internal_port = 8000

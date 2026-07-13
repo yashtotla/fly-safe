@@ -14,8 +14,9 @@ RUN uv sync --frozen --no-dev
 COPY . .
 
 ENV PATH="/app/.venv/bin:$PATH"
-# SQLite lives on the Fly volume mounted at /data (see fly.toml).
-ENV DATABASE_URL="sqlite+aiosqlite:////data/flysafe.db"
+# Ephemeral SQLite on the container's own disk (no persistent volume) — the
+# snapshot is a disposable cache that repopulates from sources on each boot.
+ENV DATABASE_URL="sqlite+aiosqlite:////tmp/flysafe.db"
 
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
