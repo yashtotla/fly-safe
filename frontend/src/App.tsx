@@ -78,6 +78,24 @@ export default function App() {
         </div>
       </Card>
 
+      <p className="mb-6 text-xs text-neutral-500">
+        <span className="mr-3 inline-block whitespace-nowrap">
+          <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500 align-middle" />
+          fresh
+        </span>
+        <span className="mr-3 inline-block whitespace-nowrap">
+          <span className="mr-1 inline-block h-2 w-2 rounded-full bg-amber-500 align-middle" />
+          stale
+        </span>
+        <span className="mr-3 inline-block whitespace-nowrap">
+          <span className="mr-1 inline-block h-2 w-2 rounded-full bg-neutral-400 align-middle" />
+          unavailable
+        </span>
+        <span className="text-neutral-400">
+          — each dot shows when that fact was last confirmed with its source.
+        </span>
+      </p>
+
       {error && (
         <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
           {error}. Is the API running on :8000?
@@ -94,7 +112,7 @@ export default function App() {
             <div className="grid gap-3">
               {bundle.flights.map((f) => (
                 <Card key={f.flight_number}>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <span className="font-medium">{f.leg}</span>{" "}
                       <span className="text-neutral-500">· {f.flight_number}</span>
@@ -135,7 +153,7 @@ export default function App() {
             <div className="grid gap-3">
               {bundle.advisories.map((a) => (
                 <Card key={a.country_code}>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="font-medium">{a.country_name}</span>
                     {a.available && typeof a.level === "number" ? (
                       <LevelBadge level={a.level} label={a.label || ""} />
@@ -170,7 +188,7 @@ export default function App() {
               )}
               {bundle.airspace.map((c) => (
                 <Card key={c.identifier}>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="font-medium">{c.title}</span>
                     <span className="shrink-0 rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800">
                       {c.status}
@@ -200,7 +218,7 @@ export default function App() {
             <div className="grid gap-3">
               {bundle.history.map((h, i) => (
                 <Card key={i}>
-                  <div className="flex items-baseline justify-between gap-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="font-medium">{h.title}</span>
                     <span className="shrink-0 text-xs text-neutral-500">{h.date}</span>
                   </div>
