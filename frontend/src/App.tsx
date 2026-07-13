@@ -43,7 +43,10 @@ export default function App() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <header className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight">fly-safe</h1>
+        <div className="flex items-center gap-2.5">
+          <img src="/favicon.svg" alt="" width="34" height="34" className="rounded-lg" />
+          <h1 className="text-2xl font-bold tracking-tight">fly-safe</h1>
+        </div>
         <p className="mt-1 text-sm text-neutral-600">
           Sourced, timestamped facts for an India → US journey via a Gulf hub. No opinions — you
           decide.
