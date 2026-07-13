@@ -29,5 +29,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - run: npm ci
+      # npm install (not `npm ci`): the lockfile can omit other-platform optional
+      # native deps (Tailwind v4 oxide / @emnapi) when generated on macOS.
+      - run: npm install
       - run: npm run build
