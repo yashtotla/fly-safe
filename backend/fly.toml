@@ -1,7 +1,7 @@
 # Fly.io config for the fly-safe backend.
 # `app` must be unique — change it (or run `fly launch` to generate one).
 app = "fly-safe-api"
-primary_region = "bom"  # Mumbai — closest to the initial cohort. Pick your own.
+primary_region = "sin"  # Singapore — reliable APAC capacity (Mumbai/bom is often full).
 
 [build]
 
